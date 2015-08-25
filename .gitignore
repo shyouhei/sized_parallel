@@ -1,0 +1,11 @@
+/vendor/
+/.bundle/
+/Gemfile.lock
+/.yardoc
+/.ruby-version
+.DS_Store
+coverage
+doc
+pkg
+*.swp
+*~

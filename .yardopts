@@ -1,0 +1,4 @@
+--markup=markdown
+--charset utf-8
+--readme README.md
+lib/**/*.rb
