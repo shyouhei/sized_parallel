@@ -70,24 +70,25 @@ class Test004Complicated < Test::Unit::TestCase
   def test_execution_order
     # 17 and 29 are pairwise disjoint below.
     ary = []
+    m = Mutex.new
     SizedParallel.new(17) { |sp|
       tmp = []
       29.times { |i|
         tmp << Thread.start(i) {|j|
           sp.start(j) { |k|
-            Thread.exclusive { ary << [k, 1] }
+            m.synchronize { ary << [k, 1] }
             next k
           }.then { |k|
-            Thread.exclusive { ary << [k, 2] }
+            m.synchronize { ary << [k, 2] }
             next k
           }.then { |k|
-            Thread.exclusive { ary << [k, 3] }
+            m.synchronize { ary << [k, 3] }
             next k
           }.then { |k|
-            Thread.exclusive { ary << [k, 4] }
+            m.synchronize { ary << [k, 4] }
             next k
           }.then { |k|
-            Thread.exclusive { ary << [k, 5] }        
+            m.synchronize { ary << [k, 5] }        
           }
         }
       }
